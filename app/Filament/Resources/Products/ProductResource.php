@@ -23,11 +23,11 @@ class ProductResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $navigationLabel = 'Produk';
+    protected static ?string $navigationLabel = 'Products';
 
-    protected static ?string $modelLabel = 'Produk';
+    protected static ?string $modelLabel = 'Product';
 
-    protected static ?string $pluralModelLabel = 'Produk';
+    protected static ?string $pluralModelLabel = 'Products';
 
     protected static ?int $navigationSort = 1;
 

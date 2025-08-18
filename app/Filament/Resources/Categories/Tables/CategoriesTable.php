@@ -2,11 +2,15 @@
 
 namespace App\Filament\Resources\Categories\Tables;
 
+use Dom\Text;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
@@ -16,13 +20,29 @@ class CategoriesTable
     {
         return $table
             ->columns([
-                //
+                ImageColumn::make('image')
+                    ->label('Gambar')
+                    ->disk('public')
+                    ->size(64)
+                    ->circular(),
+                TextColumn::make('name')
+                    ->label('Nama Kategori')
+                    ->searchable()
+                    ->sortable()
+                    ->copyable()
+                    ->badge(),
+                TextColumn::make('description')
+                    ->label('Deskripsi')
+                    ->searchable()
+                    ->sortable()
+                    ->copyable(),
             ])
             ->filters([
-                TrashedFilter::make(),
+                // TrashedFilter::make(),
             ])
             ->recordActions([
                 EditAction::make(),
+                DeleteAction::make(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
