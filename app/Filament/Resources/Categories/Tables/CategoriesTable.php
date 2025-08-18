@@ -30,7 +30,12 @@ class CategoriesTable
                     ->searchable()
                     ->sortable()
                     ->copyable()
-                    ->badge(),
+                    ->badge()
+                    ->color(fn ($record) => match ($record->status) {
+                        'active' => 'success',
+                        'inactive' => 'danger',
+                        default => 'secondary',
+                    }),
                 TextColumn::make('description')
                     ->label('Deskripsi')
                     ->searchable()
