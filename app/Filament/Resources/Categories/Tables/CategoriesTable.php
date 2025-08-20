@@ -23,8 +23,8 @@ class CategoriesTable
                 ImageColumn::make('image')
                     ->label('Gambar')
                     ->disk('public')
-                    ->size(64)
-                    ->circular(),
+                    ->imageSize(64),
+                    
                 TextColumn::make('name')
                     ->label('Nama Kategori')
                     ->searchable()

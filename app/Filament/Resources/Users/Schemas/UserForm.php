@@ -52,6 +52,7 @@ class UserForm
                         TextInput::make('password_confirmation')
                             ->label('Konfirmasi Password')
                             ->required()
+                            ->same('password')
                             ->password()
                             ->live(onBlur: true),
                     ]),

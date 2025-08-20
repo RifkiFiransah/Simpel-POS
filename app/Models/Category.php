@@ -36,6 +36,10 @@ class Category extends Model
                 $category->slug = Str::slug($category->name);
             }
         });
+
+        static::deleting(function ($category) {
+            $category->products()->update(['category_id' => null]);
+        });
     }
 
     public function products(): HasMany
