@@ -33,10 +33,10 @@ class EditSupplier extends EditRecord
         ];
     }
 
-    // protected function getRedirectUrl(): ?string
-    // {
-    //     return $this->getResourceUrl()::getUrl('index');
-    // }
+    protected function getRedirectUrl(): ?string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 
     protected function getSavedNotification(): ?Notification
     {
