@@ -15,6 +15,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use UnitEnum;
 
 class CategoryResource extends Resource
 {
@@ -24,11 +25,13 @@ class CategoryResource extends Resource
 
     protected static ?string $navigationLabel = 'Categories';
 
+    protected static string|UnitEnum|null $navigationGroup = 'Barang';
+
     protected static ?string $modelLabel = 'category';
 
     protected static ?string $pluralModelLabel = 'categories';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 4;
 
     protected static ?string $recordTitleAttribute = 'name';
 

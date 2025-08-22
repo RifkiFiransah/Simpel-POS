@@ -15,6 +15,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use UnitEnum;
 
 class UserResource extends Resource
 {
@@ -28,7 +29,9 @@ class UserResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Users';
 
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 6;
+
+    protected static string|UnitEnum|null $navigationGroup = 'Pengguna';
 
     protected static ?string $recordTitleAttribute = 'name';
 

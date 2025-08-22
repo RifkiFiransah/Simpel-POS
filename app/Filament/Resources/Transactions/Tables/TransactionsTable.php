@@ -90,13 +90,13 @@ class TransactionsTable
             ->recordActions([
                 ViewAction::make(),
                 Action::make('print_invoice')
-                    ->label('Print Invoice')
+                    ->label('Print')
                     ->icon('heroicon-o-printer')
                     ->color('success')
                     ->url(fn (Transaction $record): string => route('invoice.print', $record))
                     ->openUrlInNewTab(),
                 Action::make('download_pdf')
-                    ->label('Download PDF')
+                    ->label('Unduh')
                     ->icon('heroicon-o-document-arrow-down')
                     ->color('primary')
                     ->url(fn (Transaction $record): string => route('invoice.pdf', $record))

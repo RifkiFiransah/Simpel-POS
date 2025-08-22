@@ -46,7 +46,7 @@ class Transaction extends Model
     {
         $date = now()->format('Ymd');
         $todayCount = static::whereDate('created_at', now())->count();
-        $sequence = str_pad($todayCount + 1, 4, '0', STR_PAD_LEFT);
+        $sequence = str_pad($todayCount + 1, 3, '0', STR_PAD_LEFT);
         
         return "INV-{$date}-{$sequence}";
     }

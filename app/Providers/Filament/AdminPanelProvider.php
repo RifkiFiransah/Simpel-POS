@@ -2,6 +2,13 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\StatsOverviewWidget;
+use App\Filament\Widgets\SalesChartWidget;
+use App\Filament\Widgets\PaymentMethodChartWidget;
+use App\Filament\Widgets\PopularProductsWidget;
+use App\Filament\Widgets\RecentTransactionsWidget;
+use App\Filament\Widgets\LowStockProductsWidget;
+use App\Filament\Widgets\MonthlyComparisonWidget;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -38,8 +45,15 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
+                StatsOverviewWidget::class,
+                SalesChartWidget::class,
+                PaymentMethodChartWidget::class,
+                MonthlyComparisonWidget::class,
+                PopularProductsWidget::class,
+                RecentTransactionsWidget::class,
+                LowStockProductsWidget::class,
                 AccountWidget::class,
-                FilamentInfoWidget::class,
+                // FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

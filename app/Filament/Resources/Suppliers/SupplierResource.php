@@ -16,6 +16,7 @@ use Filament\Tables\Table;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use UnitEnum;
 
 class SupplierResource extends Resource
 {
@@ -27,11 +28,13 @@ class SupplierResource extends Resource
 
     protected static ?string $navigationLabel = 'Suppliers';
 
+    protected static string|UnitEnum|null $navigationGroup = 'Pengguna';
+
     protected static ?string $modelLabel = 'Supplier';
 
     protected static ?string $pluralModelLabel = 'Suppliers';
 
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 5;
 
     public static function getNavigationBadge(): ?string
     {

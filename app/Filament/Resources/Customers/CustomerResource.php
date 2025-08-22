@@ -15,6 +15,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use UnitEnum;
 
 class CustomerResource extends Resource
 {
@@ -30,7 +31,9 @@ class CustomerResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Customers';
 
-    protected static ?int $navigationSort = 3;
+    protected static string|UnitEnum|null $navigationGroup = 'Manajemen';
+
+    protected static ?int $navigationSort = 2;
 
     public static function getNavigationBadge(): ?string
     {
