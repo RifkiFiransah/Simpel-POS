@@ -91,4 +91,10 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function transactionItems()
+    {
+        return $this->hasMany(TransactionItem::class);
+    }
+
 }
