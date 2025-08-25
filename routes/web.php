@@ -13,5 +13,15 @@ Route::get('/invoice/{transaction}/pdf', [InvoiceController::class, 'generateInv
 Route::get('/invoice/{transaction}/print', [InvoiceController::class, 'printInvoice'])->name('invoice.print');
 
 // Export routes
-Route::get('/export/transactions/excel', [TransactionExportController::class, 'exportExcel'])->name('export.transactions.excel');
-Route::get('/export/transactions/pdf', [TransactionExportController::class, 'exportPDF'])->name('export.transactions.pdf');
+Route::prefix('export')->name('export.')->group(function () {
+    // Transaction exports
+    Route::get('/transactions/excel', [TransactionExportController::class, 'exportExcel'])->name('transactions.excel');
+    Route::get('/transactions/pdf', [TransactionExportController::class, 'exportPDF'])->name('transactions.pdf');
+    
+    // Master data exports
+    Route::get('/products/excel', [TransactionExportController::class, 'exportProductsExcel'])->name('products.excel');
+    Route::get('/customers/excel', [TransactionExportController::class, 'exportCustomersExcel'])->name('customers.excel');
+    Route::get('/suppliers/excel', [TransactionExportController::class, 'exportSuppliersExcel'])->name('suppliers.excel');
+    Route::get('/categories/excel', [TransactionExportController::class, 'exportCategoriesExcel'])->name('categories.excel');
+    Route::get('/users/excel', [TransactionExportController::class, 'exportUsersExcel'])->name('users.excel');
+});

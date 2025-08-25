@@ -30,8 +30,10 @@ class TransactionsExport implements FromCollection, WithHeadings, WithMapping, W
      */
     public function collection()
     {
-        $query = Transaction::with(['customer', 'user', 'items.product'])
-            ->orderBy('created_at', 'desc');
+        $query = Transaction::with(['customer:id,name', 'user:id,name'])
+            ->withCount('items')
+            ->orderBy('created_at', 'desc')
+            ->limit(500); // Limit untuk mencegah memory issue
 
         if ($this->dateFrom && $this->dateTo) {
             $query->whereBetween('created_at', [$this->dateFrom, $this->dateTo]);
@@ -62,16 +64,21 @@ class TransactionsExport implements FromCollection, WithHeadings, WithMapping, W
      */
     public function map($transaction): array
     {
-        $itemsDetail = $transaction->items->map(function ($item) {
-            return $item->product->name . ' (Qty: ' . $item->quantity . ', @Rp' . number_format($item->price, 0, ',', '.') . ')';
-        })->implode('; ');
+        // Get items detail dengan query terpisah untuk mencegah memory issue
+        $itemsDetail = '';
+        if ($transaction->items_count > 0) {
+            $items = $transaction->items()->with('product:id,name')->get();
+            $itemsDetail = $items->map(function ($item) {
+                return $item->product->name . ' (Qty: ' . $item->quantity . ', @Rp' . number_format($item->price, 0, ',', '.') . ')';
+            })->implode('; ');
+        }
 
         return [
             $transaction->invoice_number,
             $transaction->created_at->format('d/m/Y H:i'),
             $transaction->customer?->name ?? 'Walk-in Customer',
             $transaction->user->name,
-            $transaction->items->sum('quantity'),
+            $transaction->items_count,
             'Rp ' . number_format($transaction->total, 0, ',', '.'),
             ucfirst($transaction->method),
             'Rp ' . number_format($transaction->payment, 0, ',', '.'),
