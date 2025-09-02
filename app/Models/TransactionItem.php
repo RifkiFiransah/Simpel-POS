@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TransactionItem extends Model
 {
@@ -13,16 +13,20 @@ class TransactionItem extends Model
     protected $fillable = [
         'transaction_id',
         'product_id',
-        'price',
         'quantity',
+        'price',
         'subtotal',
     ];
 
-    protected $casts = [
-        'price' => 'decimal:2',
-        'quantity' => 'integer',
-        'subtotal' => 'decimal:2',
-    ];
+    public function transaction()
+    {
+        return $this->belongsTo(Transaction::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 
     protected static function boot()
     {
@@ -30,20 +34,20 @@ class TransactionItem extends Model
 
         static::creating(function ($item) {
             $item->subtotal = $item->price * $item->quantity;
+            $item->product()->update([
+                'stock' => $item->product->stock - $item->quantity,
+            ]);
         });
 
         static::updating(function ($item) {
             $item->subtotal = $item->price * $item->quantity;
+            $item->product()->update([
+                'stock' => $item->product->stock - $item->quantity,
+            ]);
         });
-    }
 
-    public function transaction(): BelongsTo
-    {
-        return $this->belongsTo(Transaction::class);
-    }
-
-    public function product(): BelongsTo
-    {
-        return $this->belongsTo(Product::class);
+        static::saving(function ($item) {
+            $item->subtotal = ($item->price ?? 0) * ($item->quantity ?? 1);
+        });
     }
 }

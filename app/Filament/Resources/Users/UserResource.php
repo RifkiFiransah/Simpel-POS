@@ -29,7 +29,7 @@ class UserResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Users';
 
-    protected static ?int $navigationSort = 6;
+    protected static ?int $navigationSort = 7;
 
     protected static string|UnitEnum|null $navigationGroup = 'Pengguna';
 

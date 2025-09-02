@@ -97,4 +97,9 @@ class Product extends Model
         return $this->hasMany(TransactionItem::class);
     }
 
+    public function purchaseItems()
+    {
+        return $this->hasMany(PurchaseItem::class);
+    }
+
 }

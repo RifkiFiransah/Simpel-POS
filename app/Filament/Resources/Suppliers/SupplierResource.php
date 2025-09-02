@@ -28,7 +28,7 @@ class SupplierResource extends Resource
 
     protected static ?string $navigationLabel = 'Suppliers';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Pengguna';
+    protected static string|UnitEnum|null $navigationGroup = 'Pemasok';
 
     protected static ?string $modelLabel = 'Supplier';
 

@@ -42,10 +42,8 @@ class ListExports extends ListRecords
     public function table(Table $table): Table
     {
         return $table
-            ->query(Product::query()->whereRaw('1 = 0')) // Empty query
+            ->query(Product::query()->whereRaw('1 = 0'))
             ->columns([])
-            ->actions([])
-            ->bulkActions([])
             ->emptyStateIcon('heroicon-o-document-arrow-down')
             ->emptyStateHeading('Export Data Center')
             ->emptyStateDescription('')

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('quantity')->default(1);
             $table->decimal('subtotal', 10, 2)->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
