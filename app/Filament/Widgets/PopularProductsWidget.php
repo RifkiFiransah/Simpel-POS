@@ -35,7 +35,7 @@ class PopularProductsWidget extends BaseWidget
             ->columns([
                 Tables\Columns\ImageColumn::make('image')
                     ->label('Gambar')
-                    ->size(40)
+                    ->width(40)
                     ->circular(),
                     
                 Tables\Columns\TextColumn::make('name')

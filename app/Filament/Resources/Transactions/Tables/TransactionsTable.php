@@ -52,8 +52,9 @@ class TransactionsTable
                     ->sortable()
                     ->weight('bold'),
 
-                BadgeColumn::make('method')
+                TextColumn::make('method')
                     ->label('Payment Method')
+                    ->badge()
                     ->colors([
                         'success' => 'cash',
                         'primary' => 'transfer',

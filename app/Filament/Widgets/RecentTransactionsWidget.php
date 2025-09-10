@@ -4,6 +4,7 @@ namespace App\Filament\Widgets;
 
 use App\Models\Transaction;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
 
@@ -52,9 +53,10 @@ class RecentTransactionsWidget extends BaseWidget
                     ->money('IDR')
                     ->weight('bold')
                     ->color('success'),
-                    
-                Tables\Columns\BadgeColumn::make('method')
+
+                Tables\Columns\TextColumn::make('method')
                     ->label('Metode')
+                    ->badge()
                     ->colors([
                         'success' => 'cash',
                         'primary' => 'transfer',

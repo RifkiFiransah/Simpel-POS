@@ -32,6 +32,7 @@ class CreatePurchase extends CreateRecord
     protected function afterCreate(): void
     {
         // Setelah record dan items tersimpan, hitung ulang total
+        $this->record->refresh();
         $this->record->calculateTotal();
     }
 

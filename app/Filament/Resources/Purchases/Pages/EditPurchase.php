@@ -75,6 +75,7 @@ class EditPurchase extends EditRecord
     protected function afterSave(): void
     {
         // Setelah record dan items tersimpan, hitung ulang total
+        $this->record->refresh();
         $this->record->calculateTotal();
     }
 

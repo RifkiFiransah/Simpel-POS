@@ -67,10 +67,20 @@ class Purchase extends Model
 
     public function calculateTotal(bool $save = true): void
     {
-        $this->total = $this->items->sum(fn($item) => $item->price * $item->quantity);
-        $this->change = $this->payment - $this->total;
+        // $this->total = $this->items->sum(fn($item) => $item->price * $item->quantity);
+        // $this->change = $this->payment - $this->total;
 
-        if ($save) {
+        // if ($save) {
+        //     $this->saveQuietly();
+        // }
+         $sum = (float) $this->items()
+            ->selectRaw('COALESCE(SUM(COALESCE(subtotal, price * quantity)), 0) as total_sum')
+            ->value('total_sum');
+
+        $this->total = $sum;
+        $this->change = (float) ($this->payment ?? 0) - (float) $this->total;
+
+        if ($save && $this->exists) {
             $this->saveQuietly();
         }
     }

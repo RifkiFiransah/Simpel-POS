@@ -18,6 +18,33 @@ class PurchaseItem extends Model
         'subtotal' => 'decimal:2',
     ];
 
+    //  protected static function booted()
+    // {
+    //     // Pastikan subtotal selalu price * quantity saat menyimpan item
+    //     static::saving(function (PurchaseItem $item) {
+    //         // Jika kolom subtotal ada, set otomatis; jika tidak ada, abaikan (tidak error)
+    //         if ($item->isFillable('subtotal') || array_key_exists('subtotal', $item->getAttributes())) {
+    //             $item->subtotal = (float) ($item->price ?? 0) * (int) ($item->quantity ?? 0);
+    //         }
+    //     });
+
+    //     // Setelah item berubah, hitung ulang total di parent purchase
+    //     static::saved(function (PurchaseItem $item) {
+    //         $item->purchase?->refresh();
+    //         $item->purchase?->calculateTotal();
+    //     });
+
+    //     static::deleted(function (PurchaseItem $item) {
+    //         $item->purchase?->refresh();
+    //         $item->purchase?->calculateTotal();
+    //     });
+
+    //     static::restored(function (PurchaseItem $item) {
+    //         $item->purchase?->refresh();
+    //         $item->purchase?->calculateTotal();
+    //     });
+    // }
+
     protected static function boot()
     {
         parent::boot();

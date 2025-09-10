@@ -48,8 +48,9 @@ class PurchasesTable
                     ->searchable()
                     ->weight('bold'),
 
-                BadgeColumn::make('method')
+                TextColumn::make('method')
                     ->label('Payment Method')
+                    ->badge()
                     ->colors([
                         'success' => 'cash',
                         'primary' => 'transfer',
@@ -70,6 +71,7 @@ class PurchasesTable
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('created_at', 'desc');
     }
 }

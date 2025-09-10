@@ -31,9 +31,9 @@ class CategoriesTable
                     ->sortable()
                     ->copyable()
                     ->badge()
-                    ->color(fn ($record) => match ($record->status) {
-                        'active' => 'success',
-                        'inactive' => 'danger',
+                    ->color(fn ($record) => match ($record->is_active) {
+                        true => 'success',
+                        false => 'danger',
                         default => 'secondary',
                     }),
                 TextColumn::make('description')
