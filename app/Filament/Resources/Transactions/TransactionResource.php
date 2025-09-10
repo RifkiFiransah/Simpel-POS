@@ -84,24 +84,6 @@ class TransactionResource extends Resource
         return $data;
     }
 
-
-    public static function beforeCreate(Transaction $record, array $data): void
-    {
-        // Debug data pas create
-        dd($data);
-
-        // Kalau mau log aja
-        // logger()->info('Transaction Create Data', $data);
-    }
-
-    public static function beforeSave(Transaction $record, array $data): void
-    {
-        // Debug data pas update
-        dd($data);
-
-        // logger()->info('Transaction Save Data', $data);
-    }
-
     public static function getRelations(): array
     {
         return [

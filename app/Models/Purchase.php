@@ -50,17 +50,17 @@ class Purchase extends Model
         return "PURCHASE-{$date}-{$time}-{$sequence}";
     }
 
-    function items(): HasMany
+    public function items(): HasMany
     {
         return $this->hasMany(PurchaseItem::class);
     }
 
-    function user(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    function supplier(): BelongsTo
+    public function supplier(): BelongsTo
     {
         return $this->belongsTo(Supplier::class);
     }

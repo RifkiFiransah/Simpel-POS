@@ -63,27 +63,6 @@ class TransactionsTable
                     ])
                     ->formatStateUsing(fn (string $state): string => ucfirst($state)),
 
-                // TextColumn::make('payment')
-                //     ->label('Payment')
-                //     ->money('IDR')
-                //     ->sortable(),
-
-                // TextColumn::make('change')
-                //     ->label('Change')
-                //     ->money('IDR')
-                //     ->sortable(),
-
-                // TextColumn::make('created_at')
-                //     ->label('Date')
-                //     ->dateTime('d M Y H:i')
-                //     ->sortable()
-                //     ->toggleable(),
-
-                // TextColumn::make('updated_at')
-                //     ->label('Last Updated')
-                //     ->dateTime('d M Y H:i')
-                //     ->sortable()
-                //     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 TrashedFilter::make(),

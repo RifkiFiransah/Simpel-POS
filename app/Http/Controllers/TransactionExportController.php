@@ -8,6 +8,8 @@ use App\Exports\ProductsExport;
 use App\Exports\CustomersExport;
 use App\Exports\SuppliersExport;
 use App\Exports\CategoriesExport;
+use App\Exports\PurchasesExport;
+use App\Exports\PurchasesPDFExport;
 use App\Exports\UsersExport;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -37,6 +39,30 @@ class TransactionExportController extends Controller
         
         return Excel::download(new SimpleTransactionsExport($dateFrom, $dateTo, $invoice), $filename);
     }
+
+    public function exportPurchasesExcel(Request $request)
+    {
+        // Increase memory limit untuk export
+        ini_set('memory_limit', '1024M');
+        set_time_limit(300);
+        
+        $dateFrom = $request->get('date_from');
+        $dateTo = $request->get('date_to');
+        $invoice = $request->get('invoice'); // Single invoice export
+        
+        // Tentukan nama file berdasarkan filter
+        $filename = 'pembelian-';
+        if ($invoice) {
+            $filename .= $invoice . '-';
+        } elseif ($dateFrom && $dateTo) {
+            $filename .= $dateFrom . '-to-' . $dateTo . '-';
+        } else {
+            $filename .= 'all-data-';
+        }
+        $filename .= now()->format('Y-m-d-H-i-s') . '.xlsx';
+        
+        return Excel::download(new PurchasesExport($dateFrom, $dateTo, $invoice), $filename);
+    }
     
     public function exportPDF(Request $request)
     {
@@ -45,6 +71,17 @@ class TransactionExportController extends Controller
         $invoice = $request->get('invoice');
         
         $export = new TransactionsPDFExport($dateFrom, $dateTo, $invoice);
+        
+        return $export->download();
+    }
+
+    public function exportPurchasesPDF(Request $request)
+    {
+        $dateFrom = $request->get('date_from');
+        $dateTo = $request->get('date_to');
+        $invoice = $request->get('invoice');
+        
+        $export = new PurchasesPDFExport($dateFrom, $dateTo, $invoice);
         
         return $export->download();
     }

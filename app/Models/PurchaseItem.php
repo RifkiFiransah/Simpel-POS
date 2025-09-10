@@ -64,12 +64,12 @@ class PurchaseItem extends Model
         });
     }
 
-    function purchase() : BelongsTo
+    public function purchase()
     {
         return $this->belongsTo(Purchase::class);
     }
 
-    function product() : BelongsTo
+    public function product()
     {
         return $this->belongsTo(Product::class);
     }

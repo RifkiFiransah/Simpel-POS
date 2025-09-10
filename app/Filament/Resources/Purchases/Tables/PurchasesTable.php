@@ -2,11 +2,14 @@
 
 namespace App\Filament\Resources\Purchases\Tables;
 
+use App\Models\Purchase;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
+use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
@@ -44,6 +47,7 @@ class PurchasesTable
 
                 TextColumn::make('total')
                     ->label('Total Amount')
+                    ->money('IDR')
                     ->sortable()
                     ->searchable()
                     ->weight('bold'),
@@ -63,6 +67,19 @@ class PurchasesTable
                 TrashedFilter::make(),
             ])
             ->recordActions([
+                ViewAction::make(),
+                Action::make('print_invoice')
+                    ->label('Print')
+                    ->color('danger')
+                    ->icon('heroicon-o-printer')
+                    ->url(fn (Purchase $record) : string => route('invoice.purchase.print', $record))
+                    ->openUrlInNewTab(),
+                Action::make('download_invoice')
+                    ->label('Download')
+                    ->color('success')
+                    ->icon('heroicon-o-document-arrow-down')
+                    ->url(fn (Purchase $record) : string => route('invoice.purchase.pdf', $record))
+                    ->openUrlInNewTab(),
                 EditAction::make(),
             ])
             ->toolbarActions([
