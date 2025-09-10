@@ -146,10 +146,10 @@
     <div class="invoice">
         <!-- Header -->
         <div class="header">
-            <div class="company-name">Simple POS</div>
+            <div class="company-name">{{ $about->shop_name }}</div>
             <div class="company-info">
-                Jl. Contoh No. 123, Kota, Provinsi 12345<br>
-                Telp: (021) 1234-5678 | Email: info@simplepos.com
+                {{ $about->shop_address }}<br>
+                Telp: {{ $about->shop_phone }} | Email: {{ $about->shop_email }}
             </div>
         </div>
 
@@ -232,7 +232,7 @@
 
         <!-- Footer -->
         <div class="footer">
-            <p>Terima kasih atas kunjungan Anda!</p>
+            <p>{{ $about->invoice_footer }}</p>
             <p>Invoice ini dicetak secara otomatis pada {{ now()->format('d/m/Y H:i:s') }}</p>
         </div>
     </div>

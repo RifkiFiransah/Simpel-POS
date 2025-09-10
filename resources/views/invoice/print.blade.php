@@ -124,10 +124,10 @@
     <div class="receipt">
         <!-- Header -->
         <div class="header">
-            <div class="company-name">SIMPLE POS</div>
+            <div class="company-name">{{ $about->shop_name }}</div>
             <div class="company-info">
-                Jl. Contoh No. 123<br>
-                Telp: (021) 1234-5678
+                {{ $about->shop_address }}<br>
+                Telp: {{ $about->shop_phone }}
             </div>
         </div>
 
@@ -180,7 +180,7 @@
 
         <!-- Footer -->
         <div class="footer">
-            <p>Terima Kasih!</p>
+            <p>{{ $about->invoice_footer }}</p>
             <p>{{ now()->format('d/m/Y H:i:s') }}</p>
         </div>
     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AboutShop;
 use App\Models\Purchase;
 use App\Models\Transaction;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -12,9 +13,10 @@ class InvoiceController extends Controller
     public function generateInvoice(Transaction $transaction)
     {
         $transaction->load(['items.product', 'customer', 'user']);
-        
-        $pdf = Pdf::loadView('invoice.template', compact('transaction'));
-        
+        $about = AboutShop::first();
+
+        $pdf = Pdf::loadView('invoice.template', compact('transaction', 'about'));
+
         return $pdf->stream("invoice-{$transaction->invoice_number}.pdf");
     }
 
@@ -22,24 +24,27 @@ class InvoiceController extends Controller
     {
         // Assuming you have a Purchase model similar to Transaction
         $purchase->load(['items.product', 'supplier', 'user']);
-        
-        $pdf = Pdf::loadView('invoice.purchase-template', compact('purchase'));
-        
+        $about = AboutShop::first();
+
+        $pdf = Pdf::loadView('invoice.purchase-template', compact('purchase', 'about'));
+
         return $pdf->stream("invoice-purchase-{$purchase->invoice_number}.pdf");
     }
     
     public function printInvoice(Transaction $transaction)
     {
+        $about = AboutShop::first();
         $transaction->load(['items.product', 'customer', 'user']);
-        
-        return view('invoice.print', compact('transaction'));
+
+        return view('invoice.print', compact('transaction', 'about'));
     }
 
     public function printPurchaseInvoice(Purchase $purchase)
     {
         // Assuming you have a Purchase model similar to Transaction
         $purchase->load(['items.product', 'supplier', 'user']);
-        
-        return view('invoice.print-purchase', compact('purchase'));
+        $about = AboutShop::first();
+
+        return view('invoice.print-purchase', compact('purchase', 'about'));
     }
 }

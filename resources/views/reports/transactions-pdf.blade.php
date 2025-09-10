@@ -141,7 +141,7 @@
 <body>
     <!-- Header -->
     <div class="header">
-        <div class="company-name">Simple POS</div>
+        <div class="company-name">{{ $about->shop_name }}</div>
         <div class="report-title">LAPORAN TRANSAKSI PENJUALAN</div>
         <div class="report-period">Periode: {{ $summary['period'] }}</div>
         <div class="report-date">Dicetak pada: {{ now()->format('d M Y H:i:s') }}</div>
@@ -212,9 +212,9 @@
 
     <!-- Footer -->
     <div class="footer">
-        <p><strong>Simple POS</strong> - Sistem Point of Sale</p>
+        <p><strong>{{ $about->shop_name }}</strong></p>
         <p>Laporan ini dibuat secara otomatis oleh sistem | Halaman {PAGE_NUM} dari {PAGE_COUNT}</p>
-        <p>Jl. Contoh No. 123, Kota, Indonesia | Phone: (021) 1234-5678 | Email: info@simplepos.com</p>
+        <p>{{ $about->shop_address }} | Phone: {{ $about->shop_phone }} | Email: {{ $about->shop_email }}</p>
     </div>
 </body>
 </html>

@@ -9,6 +9,7 @@ use App\Filament\Widgets\PopularProductsWidget;
 use App\Filament\Widgets\RecentTransactionsWidget;
 use App\Filament\Widgets\LowStockProductsWidget;
 use App\Filament\Widgets\MonthlyComparisonWidget;
+use App\Models\AboutShop;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -30,11 +31,16 @@ class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+        $App = AboutShop::current();
+
         return $panel
             ->default()
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandName($App->shop_name ?? 'Simple POS')
+            ->brandLogo($App->shop_logo ? asset('storage/' . $App->shop_logo) : null)
+            ->brandLogoHeight('2rem')
             ->colors([
                 'primary' => Color::Indigo,
             ])
