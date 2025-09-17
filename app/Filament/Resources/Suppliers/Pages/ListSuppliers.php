@@ -3,11 +3,13 @@
 namespace App\Filament\Resources\Suppliers\Pages;
 
 use App\Filament\Resources\Suppliers\SupplierResource;
+use App\Traits\HasResourcePermissions;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
 class ListSuppliers extends ListRecords
 {
+
     protected static string $resource = SupplierResource::class;
 
     protected function getHeaderActions(): array
@@ -15,7 +17,8 @@ class ListSuppliers extends ListRecords
         return [
             CreateAction::make()
                 ->label('Tambah Supplier')
-                ->icon('heroicon-o-plus'),
+                ->icon('heroicon-o-plus')
+                ->visible(fn() => SupplierResource::canCreate()),
         ];
     }
 }

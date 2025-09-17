@@ -11,11 +11,13 @@ use App\Models\Customer;
 use App\Models\Supplier;
 use App\Models\Category;
 use App\Models\User;
+use App\Traits\HasResourcePermissions;
 use Filament\Tables\Table;
 use Filament\Tables;
 
 class ListExports extends ListRecords
 {
+
     protected static string $resource = ExportResource::class;
 
     protected function getHeaderActions(): array

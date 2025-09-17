@@ -3,12 +3,14 @@
 namespace App\Filament\Resources\Transactions\Pages;
 
 use App\Filament\Resources\Transactions\TransactionResource;
+use App\Traits\HasResourcePermissions;
 use Filament\Actions\CreateAction;
 use Filament\Actions\Action;
 use Filament\Resources\Pages\ListRecords;
 
 class ListTransactions extends ListRecords
 {
+
     protected static string $resource = TransactionResource::class;
 
     protected function getHeaderActions(): array
@@ -30,7 +32,8 @@ class ListTransactions extends ListRecords
                 
             CreateAction::make()
                 ->label('New Transaction')
-                ->icon('heroicon-o-plus'),
+                ->icon('heroicon-o-plus')
+                ->visible(fn() => TransactionResource::canCreate()),
         ];
     }
 }

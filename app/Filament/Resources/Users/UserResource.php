@@ -8,6 +8,7 @@ use App\Filament\Resources\Users\Pages\ListUsers;
 use App\Filament\Resources\Users\Schemas\UserForm;
 use App\Filament\Resources\Users\Tables\UsersTable;
 use App\Models\User;
+use App\Traits\HasResourcePermissions;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -19,6 +20,8 @@ use UnitEnum;
 
 class UserResource extends Resource
 {
+    use HasResourcePermissions;
+
     protected static ?string $model = User::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
@@ -34,6 +37,18 @@ class UserResource extends Resource
     protected static string|UnitEnum|null $navigationGroup = 'Pengguna';
 
     protected static ?string $recordTitleAttribute = 'name';
+
+    // Define permission prefix for this resource
+    protected static function getPermissionPrefix(): string
+    {
+        return 'users';
+    }
+
+    // Hide navigation if user doesn't have view permission
+    public static function shouldRegisterNavigation(): bool
+    {
+        return static::canViewAny();
+    }
 
     public static function getNavigationBadge(): ?string
     {

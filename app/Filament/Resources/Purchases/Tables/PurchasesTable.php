@@ -2,7 +2,9 @@
 
 namespace App\Filament\Resources\Purchases\Tables;
 
+use App\Filament\Resources\Purchases\PurchaseResource;
 use App\Models\Purchase;
+use App\Traits\HasResourcePermissions;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -17,6 +19,8 @@ use Filament\Tables\Table;
 
 class PurchasesTable
 {
+    use HasResourcePermissions;
+
     public static function configure(Table $table): Table
     {
         return $table
@@ -80,7 +84,10 @@ class PurchasesTable
                     ->icon('heroicon-o-document-arrow-down')
                     ->url(fn (Purchase $record) : string => route('invoice.purchase.pdf', $record))
                     ->openUrlInNewTab(),
-                EditAction::make(),
+                EditAction::make()
+                    ->label('Edit')
+                    ->icon('heroicon-o-pencil')
+                    ->visible(fn($record) => PurchaseResource::canEdit($record)),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

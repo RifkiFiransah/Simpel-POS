@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Products\Tables;
 
+use App\Filament\Resources\Products\ProductResource;
+use App\Traits\HasResourcePermissions;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -21,6 +23,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductsTable
 {
+
     public static function configure(Table $table): Table
     {
         return $table
@@ -110,9 +113,15 @@ class ProductsTable
             ])
             ->recordActions([
                 ViewAction::make(),
-                EditAction::make(),
+                EditAction::make()
+                    ->label('Edit')
+                    ->icon('heroicon-o-pencil')
+                    ->visible(fn($record) => ProductResource::canEdit($record)),
                 DeleteAction::make()
                     ->requiresConfirmation()
+                    ->label('Hapus')
+                    ->icon('heroicon-o-trash')
+                    ->visible(fn($record) => ProductResource::canDelete($record))
                     ->action(function (Model $record) {
                         try {
                             if ($record->image && Storage::disk('public')->exists($record->image)) {

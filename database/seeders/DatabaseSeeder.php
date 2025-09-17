@@ -15,21 +15,22 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Admin User',
-            'email' => 'admin@example.com',
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Admin User',
+        //     'email' => 'admin@example.com',
+        // ]);
 
-        User::create([
-            'name' => 'Admin Simple Pos',
-            'email' => 'admin@simpelpos.com',
-            'password' => bcrypt('admin1234'),
-            'role' => 'admin'
-        ]);
+        // User::create([
+        //     'name' => 'Admin Simple Pos',
+        //     'email' => 'admin@simpelpos.com',
+        //     'password' => bcrypt('admin1234'),
+        //     'role' => 'admin'
+        // ]);
 
         $this->call([
+            RoleSeeder::class,
+            UserSeeder::class,
             AboutShopSeeder::class,
-
             CategorySeeder::class,
             ProductSeeder::class,
             CustomerSeeder::class,

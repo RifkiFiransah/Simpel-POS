@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Exports;
 
 use App\Filament\Resources\Exports\Pages\ListExports;
 use App\Models\Transaction;
+use App\Traits\HasResourcePermissions;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Resources\Resource;
@@ -14,6 +15,8 @@ use UnitEnum;
 
 class ExportResource extends Resource
 {
+    use HasResourcePermissions;
+
     protected static ?string $model = Transaction::class;
 
     protected static string|UnitEnum|null $navigationGroup = 'Reports';
@@ -27,6 +30,18 @@ class ExportResource extends Resource
     protected static ?string $pluralModelLabel = 'Export Data';
     
     protected static ?int $navigationSort = 7;
+
+    // Define permission prefix for this resource
+    protected static function getPermissionPrefix(): string
+    {
+        return 'exports';
+    }
+
+    // Hide navigation if user doesn't have view permission
+    public static function shouldRegisterNavigation(): bool
+    {
+        return static::canViewAny();
+    }
     
 
     public static function table(Table $table): Table

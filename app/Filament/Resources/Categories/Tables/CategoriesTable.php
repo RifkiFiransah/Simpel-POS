@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Categories\Tables;
 
+use App\Filament\Resources\Categories\CategoryResource;
+use App\Traits\HasResourcePermissions;
 use Dom\Text;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -16,6 +18,7 @@ use Filament\Tables\Table;
 
 class CategoriesTable
 {
+
     public static function configure(Table $table): Table
     {
         return $table
@@ -46,8 +49,14 @@ class CategoriesTable
                 // TrashedFilter::make(),
             ])
             ->recordActions([
-                EditAction::make(),
-                DeleteAction::make(),
+                EditAction::make()
+                    ->label('Edit')
+                    ->icon('heroicon-o-pencil')
+                    ->visible(fn($record) => CategoryResource::canEdit($record)),
+                DeleteAction::make()
+                    ->label('Hapus')
+                    ->icon('heroicon-o-trash')
+                    ->visible(fn($record) => CategoryResource::canDelete($record)),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Customers\Tables;
 
+use App\Filament\Resources\Customers\CustomerResource;
+use App\Traits\HasResourcePermissions;
 use Dom\Text;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -15,6 +17,7 @@ use Filament\Tables\Table;
 
 class CustomersTable
 {
+
     public static function configure(Table $table): Table
     {
         return $table
@@ -49,8 +52,14 @@ class CustomersTable
                 TrashedFilter::make(),
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->label('Edit')
+                    ->icon('heroicon-o-pencil')
+                    ->visible(fn($record) => CustomerResource::canEdit($record)),
                 DeleteAction::make()
+                    ->label('Hapus')
+                    ->icon('heroicon-o-trash')
+                    ->visible(fn($record) => CustomerResource::canDelete($record)),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

@@ -9,6 +9,7 @@ use App\Filament\Resources\Products\Pages\ViewProduct;
 use App\Filament\Resources\Products\Schemas\ProductForm;
 use App\Filament\Resources\Products\Tables\ProductsTable;
 use App\Models\Product;
+use App\Traits\HasResourcePermissions;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -20,6 +21,8 @@ use UnitEnum;
 
 class ProductResource extends Resource
 {
+    use HasResourcePermissions;
+
     protected static ?string $model = Product::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
@@ -35,6 +38,18 @@ class ProductResource extends Resource
     protected static string|UnitEnum|null $navigationGroup = 'Barang';
 
     protected static ?string $recordTitleAttribute = 'name';
+
+    // Define permission prefix for this resource
+    protected static function getPermissionPrefix(): string
+    {
+        return 'products';
+    }
+
+    // Hide navigation if user doesn't have view permission
+    public static function shouldRegisterNavigation(): bool
+    {
+        return static::canViewAny();
+    }
 
     public static function getNavigationBadge(): ?string
     {

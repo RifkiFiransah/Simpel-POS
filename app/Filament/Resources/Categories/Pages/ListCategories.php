@@ -3,11 +3,13 @@
 namespace App\Filament\Resources\Categories\Pages;
 
 use App\Filament\Resources\Categories\CategoryResource;
+use App\Traits\HasResourcePermissions;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
 class ListCategories extends ListRecords
 {
+
     protected static string $resource = CategoryResource::class;
 
     protected function getHeaderActions(): array
@@ -15,7 +17,8 @@ class ListCategories extends ListRecords
         return [
             CreateAction::make()
             ->label('Tambah Kategori')
-            ->icon('heroicon-o-plus'),
+            ->icon('heroicon-o-plus')
+            ->visible(fn() => CategoryResource::canCreate()),
         ];
     }
 }

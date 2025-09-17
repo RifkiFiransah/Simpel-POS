@@ -2,7 +2,9 @@
 
 namespace App\Filament\Resources\Transactions\Tables;
 
+use App\Filament\Resources\Transactions\TransactionResource;
 use App\Models\Transaction;
+use App\Traits\HasResourcePermissions;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -18,6 +20,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class TransactionsTable
 {
+    use HasResourcePermissions;
+
     public static function configure(Table $table): Table
     {
         return $table
@@ -81,7 +85,10 @@ class TransactionsTable
                     ->color('primary')
                     ->url(fn (Transaction $record): string => route('invoice.pdf', $record))
                     ->openUrlInNewTab(),
-                EditAction::make(),
+                EditAction::make()
+                    ->label('Edit')
+                    ->icon('heroicon-o-pencil')
+                    ->visible(fn ($record) => TransactionResource::canEdit($record)),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

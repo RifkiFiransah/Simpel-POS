@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Suppliers\Tables;
 
+use App\Filament\Resources\Suppliers\SupplierResource;
+use App\Traits\HasResourcePermissions;
 use Dom\Text;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -19,6 +21,8 @@ use Illuminate\Support\Facades\Storage;
 
 class SuppliersTable
 {
+    use HasResourcePermissions;
+
     public static function configure(Table $table): Table
     {
         return $table
@@ -63,9 +67,15 @@ class SuppliersTable
                 TrashedFilter::make(),
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->label('Edit')
+                    ->icon('heroicon-o-pencil')
+                    ->visible(fn($record) => SupplierResource::canEdit($record)),
                 DeleteAction::make()
                     ->requiresConfirmation()
+                    ->label('Hapus')
+                    ->icon('heroicon-o-trash')
+                    ->visible(fn($record) => SupplierResource::canDelete($record))
                     ->action(function (Model $record) {
                         try {
                             if($record->image && Storage::disk('public')->exists($record->image)) {

@@ -8,6 +8,7 @@ use App\Filament\Resources\Suppliers\Pages\ListSuppliers;
 use App\Filament\Resources\Suppliers\Schemas\SupplierForm;
 use App\Filament\Resources\Suppliers\Tables\SuppliersTable;
 use App\Models\Supplier;
+use App\Traits\HasResourcePermissions;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -20,6 +21,8 @@ use UnitEnum;
 
 class SupplierResource extends Resource
 {
+    use HasResourcePermissions;
+
     protected static ?string $model = Supplier::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
@@ -35,6 +38,18 @@ class SupplierResource extends Resource
     protected static ?string $pluralModelLabel = 'Suppliers';
 
     protected static ?int $navigationSort = 5;
+
+    // Define permission prefix for this resource
+    protected static function getPermissionPrefix(): string
+    {
+        return 'suppliers';
+    }
+
+    // Hide navigation if user doesn't have view permission
+    public static function shouldRegisterNavigation(): bool
+    {
+        return static::canViewAny();
+    }
 
     public static function getNavigationBadge(): ?string
     {

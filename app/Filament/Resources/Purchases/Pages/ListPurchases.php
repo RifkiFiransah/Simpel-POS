@@ -14,7 +14,10 @@ class ListPurchases extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()
+                ->label('Tambah Pembelian')
+                ->icon('heroicon-o-plus')
+                ->visible(fn() => PurchaseResource::canCreate()),
             Action::make('export_excel')
                 ->label('Export Excel')
                 ->icon('heroicon-o-document-arrow-down')

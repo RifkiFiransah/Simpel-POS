@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
+use App\Models\Role;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
@@ -55,6 +57,23 @@ class UserForm
                             ->same('password')
                             ->password()
                             ->live(onBlur: true),
+                    ]),
+                
+                Section::make('Status Akun')
+                    ->description('Atur status akun')
+                    ->schema([
+                        Select::make('role_id')
+                                ->label('Role')
+                                ->relationship('role', 'display_name')
+                                ->options(Role::where('is_active', true)->pluck('display_name', 'id'))
+                                ->required()
+                                ->searchable()
+                                ->preload(),
+
+                        Toggle::make('is_active')
+                        ->label('Active')
+                        ->default(true)
+                        ->helperText('Inactive users cannot login to the system.'),
                     ]),
             ]);
     }

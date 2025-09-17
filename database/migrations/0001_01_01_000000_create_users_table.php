@@ -11,14 +11,26 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('roles', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->unique();
+            $table->string('display_name');
+            $table->text('description')->nullable();
+            $table->json('permissions')->nullable();
+            $table->boolean('is_active')->default(false);
+            $table->timestamps();
+        });
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('role_id')->nullable()->constrained('roles')->onDelete('set null');
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->enum('role', ['admin', 'kasir', 'manajer'])->default('kasir');
+            // $table->enum('role', ['admin', 'kasir', 'manajer'])->default('kasir');
             $table->string('profile')->nullable();
             $table->string('password');
+            $table->boolean('is_active')->default(true);
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
@@ -45,6 +57,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('roles');
+
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');

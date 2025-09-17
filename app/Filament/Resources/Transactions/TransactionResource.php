@@ -9,6 +9,7 @@ use App\Filament\Resources\Transactions\Pages\ViewTransaction;
 use App\Filament\Resources\Transactions\Schemas\TransactionForm;
 use App\Filament\Resources\Transactions\Tables\TransactionsTable;
 use App\Models\Transaction;
+use App\Traits\HasResourcePermissions;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -21,6 +22,8 @@ use UnitEnum;
 
 class TransactionResource extends Resource
 {
+    use HasResourcePermissions;
+
     protected static ?string $model = Transaction::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedReceiptPercent;
@@ -36,6 +39,18 @@ class TransactionResource extends Resource
     protected static string|UnitEnum|null $navigationGroup = 'Manajemen';
 
     protected static ?int $navigationSort = 1;
+
+    // Define permission prefix for this resource
+    protected static function getPermissionPrefix(): string
+    {
+        return 'transactions';
+    }
+
+    // Hide navigation if user doesn't have view permission
+    public static function shouldRegisterNavigation(): bool
+    {
+        return static::canViewAny();
+    }
 
     public static function form(Schema $schema): Schema
     {

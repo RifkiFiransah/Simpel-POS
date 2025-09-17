@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Users\Pages;
 
 use App\Filament\Resources\Users\UserResource;
+use App\Traits\HasResourcePermissions;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
@@ -15,7 +16,8 @@ class ListUsers extends ListRecords
         return [
             CreateAction::make()
                 ->label('Tambah Pengguna')
-                ->icon('heroicon-o-plus'),
+                ->icon('heroicon-o-plus')
+                ->visible(fn() => UserResource::canCreate()),
         ];
     }
 }
