@@ -2,20 +2,6 @@
 
 Simple POS adalah aplikasi Point of Sales berbasis web yang dibangun dengan kerangka kerja **Laravel 12** dan dikelola penuh antarmukanya melalui **Filament v4**. Proyek ini ditujukan untuk mempermudah pencatatan transaksi penjualan, manajemen inventaris, dan pembuatan laporan.
 
-## Fitur Utama
-
-- **Dashboard Admin Panel**: Sistem kontrol interaktif dan responsif yang ditenagai oleh Filament.
-- **Manajemen Master Data**: Tersedia CRUD (Create, Read, Update, Delete) untuk entitas utama toko:
-    - **Kategori & Produk**: Manajemen katalog produk beserta kategorinya.
-    - **Pelanggan (Customers)**: Data relasi pelanggan toko.
-    - **Pemasok (Suppliers)**: Data pemasok stok barang.
-- **Manajemen Transaksi (Kasir)**:
-    - **Penjualan (Sales)**: Transaksi harian pelanggan (Transaction & Transaction Items).
-    - **Pembelian (Purchases)**: Transaksi kulakan stok dari supplier (Purchase & Purchase Items).
-- **Laporan & Ekspor**: Mendukung pengeksporan data secara real-time ke format file **PDF** dan **Excel**, berkat integrasi dengan DomPDF dan Maatwebsite Excel.
-- **Konfigurasi Toko**: Manajemen informasi detail dari toko (About Shop).
-- **Pengaturan Akses**: Manajemen Pengguna dan Peran (Role-Based Access Control).
-
 ## Teknologi yang Digunakan
 
 - [PHP 8.2+](https://php.net/)
